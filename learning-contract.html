@@ -6,114 +6,280 @@
         <title>Learning Contract</title>
 
         <style>
-            *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            :root {
+                --bg: #030712;
+                --card-bg: rgba(255, 255, 255, 0.03);
+                --card-border: rgba(255, 255, 255, 0.08);
+                --accent-1: #6366f1;
+                --accent-2: #10b981;
+                --accent-3: #f59e0b;
+                --accent-4: #ef4444;
+                --text-main: #f8fafc;
+                --text-dim: #94a3b8;
             }
 
-            body{
-                background: #e3e5ee;
-                font-family: 'Courier New', Courier, monospace;
-            }
-        
-            header{
-            padding: 2rem;
-            border-bottom: .2rem black solid;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
-            main{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                margin: 2rem;
+            body {
+                background-color: var(--bg);
+                color: var(--text-main);
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                line-height: 1.6;
+                overflow-x: hidden;
+            }
 
-                section{
-                    padding: 2rem;
-                    margin: 1rem 0 0 1rem;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 50rem;
-                    height: 23rem;
-                    background: #7885cc;
-                    border-radius: 2rem;
-                    transition: all 1s;
+            /* Animated Background Blobs */
+            .blobs {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+                filter: blur(80px);
 
-                    h2{
-                        margin-bottom: 1.6rem;
-                        border-bottom: solid 1px #fcea66;
-                    }
-                    p{
-                        font-size: 20px;
-                    }
-                    
+                .blob {
+                    position: absolute;
+                    width: 40vw;
+                    height: 40vw;
+                    border-radius: 50%;
+                    opacity: 0.2;
+                    animation: move 20s infinite alternate;
                 }
-                
-                section:hover{
-                        background: #4f5dad; 
-                    }
+
+                .blob-1 { background: var(--accent-1); top: -10%; left: -10%; }
+                .blob-2 { background: var(--accent-2); bottom: -10%; right: -10%; animation-delay: -5s; }
+
             }
 
-            footer{
-                justify-self: center;
-                border-bottom: solid 1px #4d450d;
-                margin: 2rem;
-                color: #6c7080;
+            
+            @keyframes move {
+                from { transform: translate(0, 0) scale(1); }
+                to { transform: translate(10%, 10%) scale(1.1); }
+            }
+
+            /* Container Layout */
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 4rem 2rem;
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 6rem;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 1s forwards;
+
+                .badge {
+                    display: inline-block;
+                    padding: 0.5rem 1rem;
+                    background: rgba(99, 102, 241, 0.1);
+                    border: 1px solid rgba(99, 102, 241, 0.2);
+                    border-radius: 100px;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.2em;
+                    color: var(--accent-1);
+                    margin-bottom: 1.5rem;
+                }
+            }
+
+            
+
+            h1 {
+                font-size: clamp(2.5rem, 8vw, 5rem);
+                font-weight: 900;
+                letter-spacing: -0.05em;
+                line-height: 1;
+                margin-bottom: 1rem;
+                background: linear-gradient(to bottom, #fff, #64748b);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            header h3 {
+                font-size: 1.25rem;
+                color: var(--text-dim);
+                font-weight: 300;
+                letter-spacing: 0.1em;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+                gap: 2rem;
+                margin-bottom: 4rem;
+            }
+
+            section {
+                background: var(--card-bg);
+                backdrop-filter: blur(12px);
+                border: 1px solid var(--card-border);
+                padding: 3rem;
+                border-radius: 2.5rem;
+                transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+                position: relative;
+                overflow: hidden;
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            section.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            section:hover {
+                border-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-10px);
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            .icon-box {
+                width: 64px;
+                height: 64px;
+                border-radius: 1.25rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 2rem;
+                font-size: 1.5rem;
+                color: #fff;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .icon-expectations { background: var(--accent-1); }
+            .icon-motivations { background: var(--accent-2); }
+            .icon-contributions { background: var(--accent-3); }
+            .icon-hindrances { background: var(--accent-4); }
+
+            h2 {
+                font-size: 2rem;
+                font-weight: 800;
+                margin-bottom: 1.5rem;
+                letter-spacing: -0.02em;
+            }
+
+            p {
+                color: var(--text-dim);
+                font-size: 1.1rem;
+                line-height: 1.7;
+                font-weight: 300;
+            }
+
+            section:hover p {
+                color: var(--text-main);
+            }
+
+            footer {
+                text-align: center;
+                padding: 4rem 0;
+                border-top: 1px solid var(--card-border);
+                margin-top: 4rem;
+            }
+
+            footer h3 {
+                font-size: 0.9rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.4em;
+                color: var(--text-dim);
+            }
+
+            @keyframes fadeInUp {
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            @media (max-width: 768px) {
+                .container { padding: 2rem 1rem; }
+                section { padding: 2rem; }
             }
         </style>
     </head>
 
     <body>
-        <header>
-            <h1>Learning Contarct </h1>
-            <h3>CIT18 Mastery in Web Technology</h3>
-        </header>
-        <main>
-            <section>
-                <h2>Expectations</h2>
-                <p>I expect for my classmate to cooperate in groupworks.
-                    As a student I expect my classmate to follow the regulation, such
-                    as no food in the lab room.
-                    I also expect my instructor to be strict yet understandable to the students.
-                    Focused on learning the skill than the theoretical learning.
-                    Short fun activities to in between the to help understand more topic.</p>
-            </section>
+        <div class="blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
 
-            <section>
-                <h2>Motivations</h2>
-                <p>The tuition fee pushes me to make it worth it and not waste it.
-                    My parents who push me to do my best in understanding the lessons.
-                    I don’t want to repeat the subject, I feel like I wasted the money.
-                    On the brighter side, in the future if I do succeed, I there is a chance I get to travel around.</p>
-            </section>
-            
-            <section>
-                <h2>Contributions</h2>
-                <p>As a student I should do my part such as cleaning and fixing my area as the class end.
-                    I would also remind my classmate to do the same.
-                    I will also lend my things to my classmate if they are in need.
-                    If they don’t understand on what to do, I will also explain it to them.
-                    I will cooperate in group activities and try to be more active in class</p>
-            </section>
+        <div class="container">
+            <header>
+                <span class="badge">Academic Portfolio</span>
+                <h1>Learning Contract</h1>
+                <h3>CIT18 Mastery in Web Technology</h3>
+            </header>
 
-            <section>
-                <h2>Hindrances</h2>
-                <p>I tend to day dream time to time, which I will be surprise what was the lesson about.
-                    There’s also time understanding the activity that I need sample from my classmates.
-                    Now that phones can be access during class, I can easily distract myself in the phone.
-                    I always have problems when I speak, it’s either I speak to fast or I am mumbling/fumbling, people will
-                    ask me a lot to repeat myself.
-                    To be honest the influence of the people's lifestyle I'm with</p>
-            </section>
-        </main>
+            <main class="grid">
+                <section id="expectations">
+                    <div class="icon-box icon-expectations"><i class="fas fa-bullseye"></i></div>
+                    <h2>Expectations</h2>
+                    <p>I expect for my classmate to cooperate in groupworks. As a student I expect my classmate to follow the regulation, such as no food in the lab room. I also expect my instructor to be strict yet understandable to the students. Focused on learning the skill than the theoretical learning. Short fun activities in between to help understand more topic.</p>
+                </section>
 
-        <footer>
-            <h3> Aliya Roi S. Paculan | 2026</h3>
+                <section id="motivations">
+                    <div class="icon-box icon-motivations"><i class="fas fa-fire"></i></div>
+                    <h2>Motivations</h2>
+                    <p>The tuition fee pushes me to make it worth it and not waste it. My parents who push me to do my best in understanding the lessons. I don’t want to repeat the subject, I feel like I wasted the money. On the brighter side, in the future if I do succeed, there is a chance I get to travel around.</p>
+                </section>
 
-        </footer>
+                <section id="contributions">
+                    <div class="icon-box icon-contributions"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h2>Contributions</h2>
+                    <p>As a student I should do my part such as cleaning and fixing my area as the class ends. I would also remind my classmate to do the same. I will also lend my things to my classmate if they are in need. If they don’t understand what to do, I will explain it to them. I will cooperate in group activities and be more active in class.</p>
+                </section>
+
+                <section id="hindrances">
+                    <div class="icon-box icon-hindrances"><i class="fas fa-ghost"></i></div>
+                    <h2>Hindrances</h2>
+                    <p>I tend to daydream from time to time, which surprises me when I miss the lesson. There's also time spent understanding activities where I need samples from classmates. Now that phones are accessible, I can easily distract myself. I have problems when I speak; I either speak too fast or mumble, and people ask me to repeat myself.</p>
+                </section>
+            </main>
+
+            <footer>
+                <h3>Aliya Roi Paculan &bull; 2026</h3>
+            </footer>
+        </div>
     </body>
+    <script>
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger the animation of cards
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mouse Move parallax effect for the background blobs
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const blob1 = document.querySelector('.blob-1');
+            const blob2 = document.querySelector('.blob-2');
+            
+            blob1.style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+            blob2.style.transform = `translate(${x * -50}px, ${y * -50}px)`;
+        });
+    </script>
 </html>
